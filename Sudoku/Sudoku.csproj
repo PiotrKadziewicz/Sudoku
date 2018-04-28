@@ -43,7 +43,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
+    <Compile Include="SudokuBoard.cs" />
+    <Compile Include="SudokuElement.cs" />
+    <Compile Include="SudokuGame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SudokuRow.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
