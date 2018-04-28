@@ -8,14 +8,26 @@ namespace Sudoku
 {
     class SudokuRow
     {
-        public List<SudokuElement> sudokuRow = new List<SudokuElement>();
+        public readonly static int MIN_INDEX = 0;
+        public readonly static int MAX_INDEX = 9;
+        public List<SudokuElement> sudokuRow { get; set; }
 
         public void setElement(SudokuElement sudokuElement)
         {
-            for (int i=0; i < 10; i++)
+            sudokuRow = new List<SudokuElement>();
+            for (int i= MIN_INDEX; i < MAX_INDEX; i++)
             {
-                sudokuRow.Add(new SudokuElement(-1));
+                sudokuRow.Add(new SudokuElement());
             }
+        }
+
+        public override string ToString()
+        {
+            return "SudokuRow{" +
+
+                "sudokuRow=" + sudokuRow +
+
+                '}'; ;
         }
     }
 }
