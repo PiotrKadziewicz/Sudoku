@@ -12,7 +12,7 @@ namespace Sudoku
         public readonly static int MAX_INDEX = 9;
         public static int EMPTY = -1;
 
-        public List<SudokuRow> columns{ get; set; }
+        public static List<SudokuRow> columns{ get; set; }
 
         public SudokuBoard()
         {
@@ -31,12 +31,12 @@ namespace Sudoku
         public override string ToString()
         {
 
-            string board = "    1   2   3   4   5   6   7   8   9 \n";
-            board += "  -------------------------------------\n";
+            string board = "\n\n  X   1   2   3   4   5   6   7   8   9 \n";
+            board += "Y   -------------------------------------\n";
 
             for (int i = 0; i < MAX_INDEX; i++)
             {
-                board += (i + 1) + " | ";
+                board += (i + 1) + "   | ";
 
                 for (int j = 0; j < MAX_INDEX; j++)
                 {
@@ -50,7 +50,7 @@ namespace Sudoku
                     }
                         
                 }
-                board += "\n  -------------------------------------\n";
+                board += "\n    -------------------------------------\n";
             }
 
             return board;

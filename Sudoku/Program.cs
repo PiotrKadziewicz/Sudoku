@@ -18,9 +18,10 @@ namespace Sudoku
 
             //}
 
-            SudokuBoard board = new SudokuBoard();
-            
-            Console.WriteLine(board.ToString());
+            SudokuGame sudokuGame = new SudokuGame();
+            //sudokuGame.PrintBoard();
+            sudokuGame.UserValue();
+            sudokuGame.PrintBoard();
             Console.ReadLine();
         }
     }
