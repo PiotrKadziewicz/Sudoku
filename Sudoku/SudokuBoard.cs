@@ -10,21 +10,50 @@ namespace Sudoku
     {
         public readonly static int MIN_INDEX = 0;
         public readonly static int MAX_INDEX = 9;
+        public static int EMPTY = -1;
 
-        public List<SudokuRow> sudokuRows { get; set; }
+        public List<SudokuRow> columns{ get; set; }
 
         public SudokuBoard()
         {
-            sudokuRows = new List<SudokuRow>();
+            columns = new List<SudokuRow>();
             for (int i = MIN_INDEX; i <= MAX_INDEX; i++)
             {
-                sudokuRows.Add(new SudokuRow());
+                columns.Add(new SudokuRow());
             }
         }
 
         public void SetValueToFiled(int row, int column, int value)
         {
-            sudokuRows[row - 1].sudokuRow[column - 1].Value = value;
+            columns[row - 1].sudokuRow[column - 1].Value = value;
+        }
+
+        public override string ToString()
+        {
+
+            string board = "    1   2   3   4   5   6   7   8   9 \n";
+            board += "  -------------------------------------\n";
+
+            for (int i = 0; i < MAX_INDEX; i++)
+            {
+                board += (i + 1) + " | ";
+
+                for (int j = 0; j < MAX_INDEX; j++)
+                {
+                    if (columns[i].sudokuRow[j].Value == EMPTY)
+                    {
+                        board += "  | ";
+                    }
+                    else
+                    {
+                        board += columns[i].sudokuRow[j].Value + " | ";
+                    }
+                        
+                }
+                board += "\n  -------------------------------------\n";
+            }
+
+            return board;
         }
     }
 }

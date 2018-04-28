@@ -12,22 +12,13 @@ namespace Sudoku
         public readonly static int MAX_INDEX = 9;
         public List<SudokuElement> sudokuRow { get; set; }
 
-        public void setElement(SudokuElement sudokuElement)
+        public SudokuRow()
         {
-            sudokuRow = new List<SudokuElement>();
-            for (int i= MIN_INDEX; i < MAX_INDEX; i++)
+            this.sudokuRow = new List<SudokuElement>();
+            for (int i = MIN_INDEX; i < MAX_INDEX; i++)
             {
                 sudokuRow.Add(new SudokuElement());
             }
-        }
-
-        public override string ToString()
-        {
-            return "SudokuRow{" +
-
-                "sudokuRow=" + sudokuRow +
-
-                '}'; ;
         }
     }
 }

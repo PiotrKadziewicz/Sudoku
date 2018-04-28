@@ -6,14 +6,23 @@ using System.Threading.Tasks;
 
 namespace Sudoku
 {
-    static void Main(string[] args)
+    class Program
     {
-        bool gameFinished = false;
-        while (!gameFinished)
+        static void Main(string[] args)
         {
-            SudokuGame theGame = new SudokuGame();
-            gameFinished = theGame.resolveSudoku();
+            //bool gameFinished = false;
+            //while (!gameFinished)
+            //{
+            //    SudokuGame theGame = new SudokuGame();
+            //    gameFinished = theGame.resolveSudoku();
 
+            //}
+
+            SudokuBoard board = new SudokuBoard();
+            
+            Console.WriteLine(board.ToString());
+            Console.ReadLine();
         }
     }
+
 }
