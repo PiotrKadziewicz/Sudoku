@@ -25,11 +25,11 @@ namespace Sudoku
                 while (s != ConsoleKey.Q)
                 {
                     Console.Write("\n Podaj X: ");
-                    int x = Convert.ToInt32(Console.ReadKey().Key)-48;
+                    int x = Convert.ToInt32(Console.ReadKey().Key) - 48;
                     Console.Write(" | Podaj Y: ");
-                    int y = Convert.ToInt32(Console.ReadKey().Key)-48;
+                    int y = Convert.ToInt32(Console.ReadKey().Key) - 48;
                     Console.Write(" | Podaj wartość 1 - 9: ");
-                    int v = Convert.ToInt32(Console.ReadKey().Key)-48;
+                    int v = Convert.ToInt32(Console.ReadKey().Key) - 48;
                     Console.Write(" | Contiuniue press Enter; Quiq press Q");
                     s = Console.ReadKey().Key;
                     sudokuBoard.SetValueToFiled(y, x, v);
@@ -43,6 +43,10 @@ namespace Sudoku
         public void PrintBoard()
         {
             Console.WriteLine(sudokuBoard.ToString());
+            SudokuResolve sudokuResolve = new SudokuResolve(sudokuBoard);
+            sudokuResolve.Row(1).ForEach(r => Console.Write(r));
+            Console.WriteLine();
+            sudokuResolve.Column(0).ForEach(r => Console.Write(r));
         }
 
         private void Example()

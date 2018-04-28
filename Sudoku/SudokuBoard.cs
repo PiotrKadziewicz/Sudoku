@@ -12,12 +12,12 @@ namespace Sudoku
         public readonly static int MAX_INDEX = 9;
         public static int EMPTY = -1;
 
-        public static List<SudokuRow> columns{ get; set; }
+        public List<SudokuRow> columns{ get; set; }
 
         public SudokuBoard()
         {
             columns = new List<SudokuRow>();
-            for (int i = MIN_INDEX; i <= MAX_INDEX; i++)
+            for (int i = MIN_INDEX; i < MAX_INDEX; i++)
             {
                 columns.Add(new SudokuRow());
             }
