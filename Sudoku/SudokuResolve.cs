@@ -28,5 +28,31 @@ namespace Sudoku
             }
             return elements;
         }
+
+        public void SprawdzanieWiersza()
+        {
+            for (int r = 0; r < 9; r++)
+            {
+                for (int i = 0; i < Row(r).Count; i++)
+                {
+                    if (Row(r)[i].Value == -1)
+                    {
+                        for (int j = 0; j < 9; j++)
+                        {
+                            if (Row(r)[i].PossibleValues.Contains(Row(r)[j].Value))
+                            {
+                                Row(r)[i].PossibleValues.Remove(Row(r)[j].Value);
+                            }
+                        }
+                        Row(r)[i].Value = Row(r)[i].PossibleValues[0];
+                    }
+                }
+            }
+        }
+        public void ColumnCheck()
+        {
+
+        }
     }
 }
+

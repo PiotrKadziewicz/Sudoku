@@ -47,6 +47,9 @@ namespace Sudoku
             sudokuResolve.Row(1).ForEach(r => Console.Write(r));
             Console.WriteLine();
             sudokuResolve.Column(0).ForEach(r => Console.Write(r));
+            sudokuResolve.SprawdzanieWiersza();
+            sudokuResolve.ColumnCheck();
+            Console.WriteLine(sudokuBoard.ToString());
         }
 
         private void Example()

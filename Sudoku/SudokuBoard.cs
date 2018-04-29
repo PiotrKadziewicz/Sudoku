@@ -12,7 +12,7 @@ namespace Sudoku
         public readonly static int MAX_INDEX = 9;
         public static int EMPTY = -1;
 
-        public List<SudokuRow> columns{ get; set; }
+        public List<SudokuRow> columns { get; set; }
 
         public SudokuBoard()
         {
@@ -48,7 +48,7 @@ namespace Sudoku
                     {
                         board += columns[i].sudokuRow[j].Value + " | ";
                     }
-                        
+
                 }
                 board += "\n    -------------------------------------\n";
             }
