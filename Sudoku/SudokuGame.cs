@@ -44,17 +44,14 @@ namespace Sudoku
         {
             Console.WriteLine(sudokuBoard.ToString());
             SudokuResolve sudokuResolve = new SudokuResolve(sudokuBoard);
-            sudokuResolve.Row(1).ForEach(r => Console.Write(r));
-            Console.WriteLine();
-            sudokuResolve.Column(0).ForEach(r => Console.Write(r));
-            sudokuResolve.SprawdzanieWiersza();
-            sudokuResolve.ColumnCheck();
+            sudokuResolve.Resolve();
             Console.WriteLine(sudokuBoard.ToString());
         }
 
         private void Example()
         {
-
+            sudokuBoard.SetValueToFiled(1, 1, 4);
+            sudokuBoard.SetValueToFiled(1, 3, 6);
             sudokuBoard.SetValueToFiled(1, 2, 2);
             sudokuBoard.SetValueToFiled(1, 4, 5);
             sudokuBoard.SetValueToFiled(1, 6, 1);
