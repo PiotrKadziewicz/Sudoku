@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sudoku
 {
-    class SudokuBoard
+    class SudokuBoard : ICloneable
     {
         public readonly static int MIN_INDEX = 0;
         public readonly static int MAX_INDEX = 9;
@@ -54,6 +54,27 @@ namespace Sudoku
             }
 
             return board;
+        }
+
+        public object Clone()
+        {
+            SudokuBoard clonedBoard = new SudokuBoard();
+            clonedBoard.columns = new List<SudokuRow>();
+
+            foreach (SudokuRow row in columns)
+            {
+                SudokuRow clonedRow = new SudokuRow();
+                clonedRow.sudokuRow.Clear();
+                foreach (SudokuElement element in row.sudokuRow)
+                {
+                    SudokuElement clonedElemnt = new SudokuElement();
+                    clonedElemnt.Value = element.Value;
+                    clonedElemnt.PossibleValues = element.PossibleValues;
+                    clonedRow.sudokuRow.Add(clonedElemnt);
+                }
+                clonedBoard.columns.Add(clonedRow);
+            }
+            return clonedBoard;
         }
     }
 }

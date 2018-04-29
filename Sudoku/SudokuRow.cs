@@ -20,5 +20,10 @@ namespace Sudoku
                 sudokuRow.Add(new SudokuElement());
             }
         }
+
+        public SudokuRow(int clone)
+        {
+            this.sudokuRow = new List<SudokuElement>();
+        }
     }
 }

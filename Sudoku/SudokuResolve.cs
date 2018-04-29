@@ -9,17 +9,19 @@ namespace Sudoku
     class SudokuResolve
     {
         private SudokuBoard board;
+        List<SudokuBackTrack> backTracks = new List<SudokuBackTrack>();
+
         public SudokuResolve(SudokuBoard board)
         {
             this.board = board;
         }
 
-        public List<SudokuElement> Row(int rowNo)
+        private List<SudokuElement> Row(int rowNo)
         {
             return board.columns[rowNo].sudokuRow;
         }
 
-        public List<SudokuElement> Column(int colNo)
+        private List<SudokuElement> Column(int colNo)
         {
             List<SudokuElement> elements = new List<SudokuElement>();
             for (int i = 0; i < 9; i++)
@@ -29,7 +31,7 @@ namespace Sudoku
             return elements;
         }
 
-        public List<SudokuElement> Section(int secColNo, int secRowNo)
+        private List<SudokuElement> Section(int secColNo, int secRowNo)
         {
             List<SudokuElement> section = new List<SudokuElement>();
             for (int i = 0; i < 3; i++)
@@ -42,7 +44,7 @@ namespace Sudoku
             return section;
         }
 
-        public void RowCheck()
+        private void RowCheck()
         {
             for (int r = 0; r < 9; r++)
             {
@@ -62,16 +64,12 @@ namespace Sudoku
                         {
                             Row(r)[i].Value = Row(r)[i].PossibleValues[0];
                         }
-                        if(Row(r)[i].PossibleValues.Count == 0)
-                        {
-                            Console.WriteLine("bee");
-                        }
                     }
                 }
             }
         }
 
-        public void ColumnCheck()
+        private void ColumnCheck()
         {
             for (int c = 0; c < 9; c++)
             {
@@ -95,7 +93,7 @@ namespace Sudoku
             }
         }
 
-        public void SectionCheck()
+        private void SectionCheck()
         {
             for (int i = 0; i < 9; i += 3)
             {
@@ -126,9 +124,13 @@ namespace Sudoku
         public void Resolve()
         {
             bool check = true;
+            int emptyValue = 0;
+            int emptyValueTemp = 0;
+            int count = 1;
             while (check == true)
             {
                 check = false;
+                emptyValue = 0;
                 for (int i = 0; i < 9; i++)
                 {
                     for (int j = 0; j < 9; j++)
@@ -139,12 +141,54 @@ namespace Sudoku
 
                         if (Row(i)[j].Value == -1)
                         {
+                            emptyValue++;
                             check = true;
                         }
                     }
                 }
+                if (emptyValueTemp == emptyValue)
+                {
+                    //check = false;
+                }
+                count++;
+                emptyValueTemp = emptyValue;
+
             }
+            Console.WriteLine("Ilość pętli: " + count);
+        }
+
+        public void guess()
+        {
+            SudokuBoard boardCopy = new SudokuBoard();
+            boardCopy = (SudokuBoard)board.Clone();
+            int i = 0;
+            int j = 0;
+            int value = 0;
+
+            if (backTracks == null)
+            {
+                for (i = 0; i < 9; i++)
+                {
+                    for (j = 0; j < 9; j++)
+                    {
+                        if (Row(i)[j].Value == -1)
+                        {
+                            for (int e = 0; e < Row(i)[j].PossibleValues.Count; e++)
+                            {
+                                value = Row(i)[j].PossibleValues[e];
+                                Row(i)[j].PossibleValues.Remove(e);
+                                Row(i)[j].Value = value;
+                                break;
+                            }
+
+                        }
+                    }
+                }
+            }
+            else
+            {
+            }
+            backTracks.Add(new SudokuBackTrack(boardCopy, value, i, j));
         }
     }
 }
-

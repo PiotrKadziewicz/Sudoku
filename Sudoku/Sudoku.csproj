@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
+    <Compile Include="SudokuBackTrack.cs" />
     <Compile Include="SudokuBoard.cs" />
     <Compile Include="SudokuElement.cs" />
     <Compile Include="SudokuGame.cs" />
