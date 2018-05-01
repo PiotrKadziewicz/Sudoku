@@ -58,13 +58,13 @@ namespace Sudoku
 
         private void Example()
         {
-            sudokuBoard.SetValueToFiled(1, 1, 4);
+            //sudokuBoard.SetValueToFiled(1, 1, 4);
             sudokuBoard.SetValueToFiled(1, 5, 7);
             sudokuBoard.SetValueToFiled(1, 2, 2);
             sudokuBoard.SetValueToFiled(1, 4, 5);
             sudokuBoard.SetValueToFiled(1, 6, 1);
             sudokuBoard.SetValueToFiled(1, 8, 9);
-           sudokuBoard.SetValueToFiled(2, 1, 8);
+            //sudokuBoard.SetValueToFiled(2, 1, 8);
             sudokuBoard.SetValueToFiled(2, 4, 2);
             sudokuBoard.SetValueToFiled(2, 6, 3);
             sudokuBoard.SetValueToFiled(2, 9, 6);
