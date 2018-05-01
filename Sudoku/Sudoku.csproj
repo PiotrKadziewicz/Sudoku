@@ -46,6 +46,7 @@
     <Compile Include="SudokuBackTrack.cs" />
     <Compile Include="SudokuBoard.cs" />
     <Compile Include="SudokuElement.cs" />
+    <Compile Include="SudokuException.cs" />
     <Compile Include="SudokuGame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SudokuResolve.cs" />
