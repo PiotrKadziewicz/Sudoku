@@ -57,6 +57,10 @@ namespace Sudoku
                         {
                             if (Row(r)[i].PossibleValues.Contains(Row(r)[j].Value))
                             {
+                                if (Row(r)[i].PossibleValues.Count == 1)
+                                {
+                                    //rzuć wyjątek
+                                }
                                 Row(r)[i].PossibleValues.Remove(Row(r)[j].Value);
                             }
                         }
@@ -81,6 +85,10 @@ namespace Sudoku
                         {
                             if (Column(c)[i].PossibleValues.Contains(Column(c)[j].Value))
                             {
+                                if (Column(c)[i].PossibleValues.Count == 1)
+                                {
+                                    //rzuc wyjatek
+                                }
                                 Column(c)[i].PossibleValues.Remove(Column(c)[j].Value);
                             }
                         }
@@ -107,6 +115,10 @@ namespace Sudoku
                             {
                                 if (Section(i, j)[c].PossibleValues.Contains(Section(i, j)[e].Value))
                                 {
+                                    if (Section(i, j)[c].PossibleValues.Count == 1)
+                                    {
+                                        // rzuć wyjątek
+                                    }
                                     Section(i, j)[c].PossibleValues.Remove(Section(i, j)[e].Value);
                                 }
                             }
@@ -121,16 +133,38 @@ namespace Sudoku
             }
         }
 
+        private bool Solved()
+        {
+            for (int i = 0; i < 9; i++)
+            {
+                for (int j = 0; j < 9; j++)
+                {
+                    if (Row(i)[j].Value == -1)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        private bool Solving(int counter, int counterTemp)
+        {
+            if (counter == counterTemp)
+            {
+                return false;
+            }
+            return true;
+        }
+
         public void Resolve()
         {
-            bool check = true;
-            int emptyValue = 0;
-            int emptyValueTemp = 0;
+            int counter = 0;
+            int counterTemp = 0;
             int count = 1;
-            while (check == true)
+            do
             {
-                check = false;
-                emptyValue = 0;
+                counter = 0;
                 for (int i = 0; i < 9; i++)
                 {
                     for (int j = 0; j < 9; j++)
@@ -141,54 +175,72 @@ namespace Sudoku
 
                         if (Row(i)[j].Value == -1)
                         {
-                            emptyValue++;
-                            check = true;
+                            counter++;
                         }
                     }
                 }
-                if (emptyValueTemp == emptyValue)
-                {
-                    //check = false;
-                }
                 count++;
-                emptyValueTemp = emptyValue;
-
+                counterTemp = counter;
+            } while (Solving(counter, counterTemp) == true);
+            if (!Solved())
+            {
+                Guess();
             }
+
             Console.WriteLine("Ilość pętli: " + count);
         }
-
-        public void guess()
+        private void Guess()
         {
-            SudokuBoard boardCopy = new SudokuBoard();
-            boardCopy = (SudokuBoard)board.Clone();
-            int i = 0;
-            int j = 0;
             int value = 0;
-
-            if (backTracks == null)
+            bool check = true;
+            int x = 0;
+            int y = 0;
+            int r = 0;
+            int i = 0;
+            for (r = 0; r < 9; r++)
             {
                 for (i = 0; i < 9; i++)
                 {
-                    for (j = 0; j < 9; j++)
+                    if (Row(r)[i].Value == -1)
                     {
-                        if (Row(i)[j].Value == -1)
+                        if (Row(r)[i].PossibleValues.Count > 1)
                         {
-                            for (int e = 0; e < Row(i)[j].PossibleValues.Count; e++)
-                            {
-                                value = Row(i)[j].PossibleValues[e];
-                                Row(i)[j].PossibleValues.Remove(e);
-                                Row(i)[j].Value = value;
-                                break;
-                            }
-
+                            value = Row(r)[i].PossibleValues[0];
+                            Row(r)[i].Value = value;
+                            x = i;
+                            y = r;
+                            backTracks.Add(new SudokuBackTrack((SudokuBoard)board.Clone(), value, x, y));
+                            Resolve();
                         }
                     }
                 }
             }
-            else
-            {
-            }
-            backTracks.Add(new SudokuBackTrack(boardCopy, value, i, j));
+            //do
+            //{
+            //    do
+            //    {
+            //        if (r == 8 || i == 9)
+            //        {
+            //            check = false;
+            //        }
+            //        if (Row(r)[i].Value == -1)
+            //        {
+            //            if (Row(r)[i].PossibleValues.Count > 1)
+            //            {
+            //                value = Row(r)[i].PossibleValues[0];
+            //                Row(r)[i].Value = value;
+            //                x = i;
+            //                y = r;
+            //                check = false;
+
+            //            }
+            //        }
+            //        i++;
+            //    } while (check);
+            //    r++;
+            //} while (check);
+
+
         }
     }
 }

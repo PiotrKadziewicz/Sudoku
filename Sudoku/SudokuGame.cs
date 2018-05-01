@@ -44,53 +44,20 @@ namespace Sudoku
         {
             SudokuBoard boardCopy = new SudokuBoard();
             Console.WriteLine(sudokuBoard.ToString());
-
             SudokuResolve sudokuResolve = new SudokuResolve(sudokuBoard);
+
             sudokuResolve.Resolve();
- 
+
+            sudokuBoard.columns[1].sudokuRow[7].PossibleValues.ForEach(p => Console.Write(p + " "));
+            Console.WriteLine();
+            Console.WriteLine(sudokuBoard.columns[1].sudokuRow[7].Value);
             Console.WriteLine(sudokuBoard.ToString());
         }
 
         private void Example()
         {
-            sudokuBoard.SetValueToFiled(1, 1, 4);
-            //sudokuBoard.SetValueToFiled(1, 3, 6);
-            sudokuBoard.SetValueToFiled(1, 2, 2);
-            sudokuBoard.SetValueToFiled(1, 4, 5);
-            sudokuBoard.SetValueToFiled(1, 6, 1);
-            sudokuBoard.SetValueToFiled(1, 8, 9);
-            sudokuBoard.SetValueToFiled(2, 1, 8);
-            sudokuBoard.SetValueToFiled(2, 4, 2);
-            sudokuBoard.SetValueToFiled(2, 6, 3);
-            sudokuBoard.SetValueToFiled(2, 9, 6);
-            sudokuBoard.SetValueToFiled(3, 2, 3);
-            sudokuBoard.SetValueToFiled(3, 5, 6);
-            sudokuBoard.SetValueToFiled(3, 8, 7);
-            sudokuBoard.SetValueToFiled(4, 3, 1);
-            sudokuBoard.SetValueToFiled(4, 7, 6);
-            sudokuBoard.SetValueToFiled(5, 1, 5);
-            sudokuBoard.SetValueToFiled(5, 2, 4);
-            sudokuBoard.SetValueToFiled(5, 8, 1);
-            sudokuBoard.SetValueToFiled(5, 9, 9);
-            sudokuBoard.SetValueToFiled(6, 3, 2);
-            sudokuBoard.SetValueToFiled(6, 7, 7);
-            sudokuBoard.SetValueToFiled(7, 2, 9);
-            sudokuBoard.SetValueToFiled(7, 5, 3);
-            sudokuBoard.SetValueToFiled(7, 8, 8);
-            sudokuBoard.SetValueToFiled(8, 1, 2);
-            sudokuBoard.SetValueToFiled(8, 4, 8);
-            sudokuBoard.SetValueToFiled(8, 6, 4);
-            sudokuBoard.SetValueToFiled(8, 9, 7);
-            sudokuBoard.SetValueToFiled(9, 2, 1);
-            sudokuBoard.SetValueToFiled(9, 4, 9);
-            sudokuBoard.SetValueToFiled(9, 6, 7);
-            sudokuBoard.SetValueToFiled(9, 8, 6);
-        }
-
-        private void Example2()
-        {
-            sudokuBoard.SetValueToFiled(1, 1, 4);
-            sudokuBoard.SetValueToFiled(1, 3, 6);
+            //sudokuBoard.SetValueToFiled(1, 1, 4);
+            //sudokuBoard.SetValueToFiled(1, 5, 7);
             sudokuBoard.SetValueToFiled(1, 2, 2);
             sudokuBoard.SetValueToFiled(1, 4, 5);
             sudokuBoard.SetValueToFiled(1, 6, 1);
