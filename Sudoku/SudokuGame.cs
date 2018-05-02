@@ -54,6 +54,7 @@ namespace Sudoku
             Console.WriteLine();
             Console.WriteLine(sudokuBoard.columns[1].sudokuRow[7].Value);
             Console.WriteLine(sudokuBoard.ToString());
+            Console.WriteLine("END");
         }
 
         private void Example()

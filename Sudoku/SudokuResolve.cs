@@ -9,7 +9,7 @@ namespace Sudoku
     class SudokuResolve
     {
         private SudokuBoard board;
-        List<SudokuBackTrack> backTracks = new List<SudokuBackTrack>();
+        Stack<SudokuBackTrack> backTracks = new Stack<SudokuBackTrack>();
 
         public SudokuResolve(SudokuBoard board)
         {
@@ -54,7 +54,7 @@ namespace Sudoku
                     {
                         for (int j = 0; j < 9; j++)
                         {
-                            if (Row(r)[i].PossibleValues.Count == 1 && Row(r)[i].PossibleValues.Contains(Row(r)[j].Value))
+                            if ((Row(r)[i].PossibleValues.Count == 1 && Row(r)[i].PossibleValues.Contains(Row(r)[j].Value)) || Row(r)[i].PossibleValues.Count == 0)
                             {
                                 throw new SudokuException();
                             }
@@ -129,7 +129,7 @@ namespace Sudoku
                     {
                         for (int j = 0; j < 9; j++)
                         {
-                            if (Column(c)[i].PossibleValues.Count == 1 && Column(c)[i].PossibleValues.Contains(Column(c)[j].Value))
+                            if ((Column(c)[i].PossibleValues.Count == 1 && Column(c)[i].PossibleValues.Contains(Column(c)[j].Value)) || Column(c)[i].PossibleValues.Count == 0)
                             {
                                 throw new SudokuException();
                             }
@@ -207,7 +207,7 @@ namespace Sudoku
                         {
                             for (int e = 0; e < 9; e++)
                             {
-                                if (Section(i, j)[c].PossibleValues.Count == 1 && Section(i, j)[c].PossibleValues.Contains(Section(i, j)[e].Value))
+                                if ((Section(i, j)[c].PossibleValues.Count == 1 && Section(i, j)[c].PossibleValues.Contains(Section(i, j)[e].Value)) || Section(i, j)[c].PossibleValues.Count == 0)
                                 {
                                     throw new SudokuException();
                                 }
@@ -357,7 +357,7 @@ namespace Sudoku
             Console.WriteLine("Ilość pętli: " + count);
         }
 
-        private void Guess()
+        private bool Guess()
         {
             int value = 0;
             for (int r = 0; r < 9; r++)
@@ -369,7 +369,7 @@ namespace Sudoku
                         if (Row(r)[i].PossibleValues.Count >= 1)
                         {
                             value = Row(r)[i].PossibleValues[0];
-                            backTracks.Add(new SudokuBackTrack((SudokuBoard)board.Clone(), value, i, r));
+                            backTracks.Push(new SudokuBackTrack((SudokuBoard)board.Clone(), value, i, r));
                             Console.WriteLine("Insert: " + value);
 
                             Row(r)[i].Value = value;
@@ -381,18 +381,25 @@ namespace Sudoku
                             throw new SudokuException();
                         }
                     }
+                    else if (Solved())
+                    {
+                        
+                        Console.WriteLine(board.ToString());
+                        return true;
+                    }
                 }
+                
             }
+            return true;
         }
 
         private void BackTrack()
         {
-            SudokuBackTrack back = backTracks[backTracks.Count - 1];
-            backTracks.Remove(back);
+            SudokuBackTrack back = backTracks.Pop();
             board = back.SudokuBoard;
-            //Console.WriteLine("\nBACKTRACK | Value: " + back.Value + " | Posision: " + back.Y + " | " + back.X + "\n" + back.SudokuBoard);
+            Console.WriteLine("\nBACKTRACK | Value: " + back.Value + " | Posision: " + back.Y + " | " + back.X + "\n" + back.SudokuBoard);
             board.columns[back.Y].sudokuRow[back.X].PossibleValues.Remove(back.Value);
-            // board.columns[back.Y].sudokuRow[back.X].PossibleValues.ForEach(p => Console.Write(p + " | "));
+            board.columns[back.Y].sudokuRow[back.X].PossibleValues.ForEach(p => Console.Write(p + " | "));
         }
     }
 }

@@ -69,7 +69,8 @@ namespace Sudoku
                 {
                     SudokuElement clonedElemnt = new SudokuElement();
                     clonedElemnt.Value = element.Value;
-                    clonedElemnt.PossibleValues = element.PossibleValues;
+                    clonedElemnt.PossibleValues.Clear();
+                    element.PossibleValues.ForEach(e => clonedElemnt.PossibleValues.Add(e));
                     clonedRow.sudokuRow.Add(clonedElemnt);
                 }
                 clonedBoard.columns.Add(clonedRow);
