@@ -54,142 +54,68 @@ namespace Sudoku
                     {
                         for (int j = 0; j < 9; j++)
                         {
-                            if ((Row(r)[i].PossibleValues.Count == 1 && Row(r)[i].PossibleValues.Contains(Row(r)[j].Value)) || Row(r)[i].PossibleValues.Count == 0)
-                            {
-                                throw new SudokuException();
-                            }
-                            else if (Row(r)[i].PossibleValues.Contains(Row(r)[j].Value))
+                            if (Row(r)[i].PossibleValues.Contains(Row(r)[j].Value))
                             {
                                 Row(r)[i].PossibleValues.Remove(Row(r)[j].Value);
                             }
-                        }
-                    }
-                }
-            }
-        }
-
-        private void RowCheckPossibilities()
-        {
-
-            for (int r = 0; r < 9; r++)
-            {
-                HashSet<int> set = new HashSet<int>();
-                for (int i = 0; i < 9; i++)
-                {
-                    if (Row(r)[i].Value == -1)
-                    {
-                        foreach (int pos in Row(r)[i].PossibleValues)
-                        {
-                            set.Add(pos);
-                        }
-                    }
-                }
-
-                for (int i = 0; i < 9; i++)
-                {
-                    if (Row(r)[i].Value == -1)
-                    {
-                        for (int p = 0; p < Row(r)[i].PossibleValues.Count; p++)
-                        {
-                            if (!set.Contains(Row(r)[i].PossibleValues[p]))
+                            else if ((Row(r)[i].PossibleValues.Count == 1 && Row(r)[i].PossibleValues.Contains(Row(r)[j].Value)) || Row(r)[i].PossibleValues.Count == 0)
                             {
-                                Row(r)[i].Value = Row(r)[i].PossibleValues[p];
+                                throw new SudokuException();
                             }
+
                         }
-
-                    }
-                }
-            }
-        }
-
-        private void InsertValueRow()
-        {
-            for (int r = 0; r < 9; r++)
-            {
-                for (int i = 0; i < Row(r).Count; i++)
-                {
-                    if (Row(r)[i].Value == -1)
-                    {
                         if (Row(r)[i].PossibleValues.Count == 1)
                         {
                             Row(r)[i].Value = Row(r)[i].PossibleValues[0];
                         }
                     }
+
                 }
             }
         }
-
         private void ColumnCheck()
         {
             for (int c = 0; c < 9; c++)
             {
+                HashSet<int> set = new HashSet<int>();
                 for (int i = 0; i < Column(c).Count; i++)
                 {
                     if (Column(c)[i].Value == -1)
                     {
                         for (int j = 0; j < 9; j++)
                         {
-                            if ((Column(c)[i].PossibleValues.Count == 1 && Column(c)[i].PossibleValues.Contains(Column(c)[j].Value)) || Column(c)[i].PossibleValues.Count == 0)
-                            {
-                                throw new SudokuException();
-                            }
-                            else if (Column(c)[i].PossibleValues.Contains(Column(c)[j].Value))
+
+                            if (Column(c)[i].PossibleValues.Contains(Column(c)[j].Value))
                             {
                                 Column(c)[i].PossibleValues.Remove(Column(c)[j].Value);
                             }
-                        }
-
-                    }
-                }
-            }
-        }
-
-        private void ColumnCheckPossibilities()
-        {
-
-            for (int c = 0; c < 9; c++)
-            {
-                HashSet<int> set = new HashSet<int>();
-                for (int i = 0; i < 9; i++)
-                {
-                    if (Column(c)[i].Value == -1)
-                    {
-                        foreach (int pos in Column(c)[i].PossibleValues)
-                        {
-                            set.Add(pos);
-                        }
-                    }
-                }
-
-                for (int i = 0; i < 9; i++)
-                {
-                    if (Column(c)[i].Value == -1)
-                    {
-                        for (int p = 0; p < Column(c)[i].PossibleValues.Count; p++)
-                        {
-                            if (!set.Contains(Column(c)[i].PossibleValues[p]))
+                            else if ((Column(c)[i].PossibleValues.Count == 1 && Column(c)[i].PossibleValues.Contains(Column(c)[j].Value)) || Column(c)[i].PossibleValues.Count == 0)
                             {
-                                Column(c)[i].Value = Column(c)[i].PossibleValues[p];
+                                throw new SudokuException();
                             }
                         }
-
-                    }
-                }
-            }
-        }
-
-        private void InsertValueColumn()
-        {
-            for (int c = 0; c < 9; c++)
-            {
-                for (int i = 0; i < Column(c).Count; i++)
-                {
-                    if (Column(c)[i].Value == -1)
-                    {
                         if (Column(c)[i].PossibleValues.Count == 1)
                         {
                             Column(c)[i].Value = Column(c)[i].PossibleValues[0];
                         }
+
+                        ////ColumnCheckPossibilities
+                        //Column(c)[i].PossibleValues.ForEach(p => set.Add(p));
+
+                        //for (int j = 0; j < 9; j++)
+                        //{
+                        //    if (Column(c)[j].Value == -1)
+                        //    {
+                        //        for (int p = 0; p < Column(c)[j].PossibleValues.Count; p++)
+                        //        {
+                        //            if (!set.Contains(Column(c)[j].PossibleValues[p]))
+                        //            {
+                        //                Column(c)[i].Value = Column(c)[j].PossibleValues[p];
+                        //            }
+                        //        }
+
+                        //    }
+                        //}
                     }
                 }
             }
@@ -201,6 +127,7 @@ namespace Sudoku
             {
                 for (int j = 0; j < 9; j += 3)
                 {
+                    HashSet<int> set = new HashSet<int>();
                     for (int c = 0; c < 9; c++)
                     {
                         if (Section(i, j)[c].Value == -1)
@@ -217,64 +144,26 @@ namespace Sudoku
                                 }
                             }
                         }
-                    }
-
-                }
-            }
-        }
-
-        private void SecionCheckPossibilities()
-        {
-            for (int i = 0; i < 9; i += 3)
-            {
-                for (int j = 0; j < 9; j += 3)
-                {
-                    HashSet<int> set = new HashSet<int>();
-                    for (int c = 0; c < 9; c++)
-                    {
-                        if (Section(i, j)[c].Value == -1)
+                        if (Section(i, j)[c].PossibleValues.Count == 1)
                         {
-                            foreach (int pos in Section(i, j)[c].PossibleValues)
-                            {
-                                set.Add(pos);
-                            }
-
+                            Section(i, j)[c].Value = Section(i, j)[c].PossibleValues[0];
                         }
+                        //Section(i, j)[c].PossibleValues.ForEach(p => set.Add(p));
+                        //for (int g = 0; g < 9; g++)
+                        //{
+                        //    if (Section(i, j)[g].Value == -1)
+                        //    {
+                        //        for (int p = 0; p < Section(i, j)[g].PossibleValues.Count; p++)
+                        //        {
+                        //            if (!set.Contains(Section(i, j)[g].PossibleValues[p]))
+                        //            {
+                        //                Section(i, j)[c].Value = Section(i, j)[g].PossibleValues[p];
+                        //            }
+                        //        }
+                        //    }
+                        //}
                     }
 
-                    for (int c = 0; c < 9; c++)
-                    {
-                        if (Section(i, j)[c].Value == -1)
-                        {
-                            for (int p = 0; p < Section(i, j)[c].PossibleValues.Count; p++)
-                            {
-                                if (!set.Contains(Section(i, j)[c].PossibleValues[p]))
-                                {
-                                    Section(i, j)[c].Value = Section(i, j)[c].PossibleValues[p];
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        private void InsertValueSection()
-        {
-            for (int i = 0; i < 9; i += 3)
-            {
-                for (int j = 0; j < 9; j += 3)
-                {
-                    for (int c = 0; c < 9; c++)
-                    {
-                        if (Section(i, j)[c].Value == -1)
-                        {
-                            if (Section(i, j)[c].PossibleValues.Count == 1)
-                            {
-                                Section(i, j)[c].Value = Section(i, j)[c].PossibleValues[0];
-                            }
-                        }
-                    }
                 }
             }
         }
@@ -303,58 +192,66 @@ namespace Sudoku
             return true;
         }
 
-        public void Resolve()
+        private void StandardResolve()
         {
-            int counter = 0;
-            int counterTemp = 0;
-            int count = 1;
             try
             {
+                int counter = 0;
+                int counterTemp = 0;
                 do
                 {
                     counter = 0;
+                    counterTemp = 0;
+
                     for (int i = 0; i < 9; i++)
                     {
                         for (int j = 0; j < 9; j++)
                         {
-
-                            RowCheck();
-                            ColumnCheck();
-                            SectionCheck();
-                            InsertValueRow();
-                            InsertValueColumn();
-                            InsertValueSection();
-                            RowCheckPossibilities();
-                            ColumnCheckPossibilities();
-                            SecionCheckPossibilities();
-
                             if (Row(i)[j].Value == -1)
                             {
                                 counter++;
                             }
                         }
                     }
-                    count++;
-                    counterTemp = counter;
+
+                    RowCheck();
+                    ColumnCheck();
+                    SectionCheck();
+
+                    for (int i = 0; i < 9; i++)
+                    {
+                        for (int j = 0; j < 9; j++)
+                        {
+                            if (Row(i)[j].Value == -1)
+                            {
+                                counterTemp++;
+                            }
+                        }
+                    }
                 } while (Solving(counter, counterTemp) == true);
             }
             catch (SudokuException exp)
             {
                 BackTrack();
             }
-            if (!Solved())
+        }
+
+        public SudokuBoard Resolve()
+        {
+            while (!Solved())
             {
+
+                StandardResolve();
                 try
                 {
                     Guess();
                 }
                 catch (SudokuException exp)
                 {
-                    Resolve();
+                    StandardResolve();
                 }
             }
-
-            Console.WriteLine("Ilość pętli: " + count);
+            return board;
         }
 
         private bool Guess()
@@ -374,32 +271,33 @@ namespace Sudoku
 
                             Row(r)[i].Value = value;
                             Console.WriteLine(board.ToString());
-                            Resolve();
+                            return true;
                         }
                         else
                         {
                             throw new SudokuException();
                         }
                     }
-                    else if (Solved())
-                    {
-                        
-                        Console.WriteLine(board.ToString());
-                        return true;
-                    }
                 }
-                
             }
             return true;
         }
 
         private void BackTrack()
         {
-            SudokuBackTrack back = backTracks.Pop();
-            board = back.SudokuBoard;
-            Console.WriteLine("\nBACKTRACK | Value: " + back.Value + " | Posision: " + back.Y + " | " + back.X + "\n" + back.SudokuBoard);
-            board.columns[back.Y].sudokuRow[back.X].PossibleValues.Remove(back.Value);
-            board.columns[back.Y].sudokuRow[back.X].PossibleValues.ForEach(p => Console.Write(p + " | "));
+            if (backTracks.Count != 0)
+            {
+                SudokuBackTrack back = backTracks.Pop();
+                board = back.SudokuBoard;
+                Console.WriteLine("\nBACKTRACK | Value: " + back.Value + " | Posision: " + back.Y + " | " + back.X + "\n" + back.SudokuBoard);
+                board.columns[back.Y].sudokuRow[back.X].PossibleValues.Remove(back.Value);
+                board.columns[back.Y].sudokuRow[back.X].PossibleValues.ForEach(p => Console.Write(p + " | "));
+            }
+            else
+            {
+                throw new SudokuException();
+            }
+
         }
     }
 }
