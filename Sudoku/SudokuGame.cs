@@ -19,20 +19,35 @@ namespace Sudoku
             if (k == ConsoleKey.E)
             {
                 Example();
+                Console.WriteLine(sudokuBoard.ToString());
             }
             else if (k == ConsoleKey.O)
             {
-                while (s != ConsoleKey.Q)
+                Console.WriteLine(sudokuBoard.ToString());
+                while (s != ConsoleKey.S)
                 {
-                    Console.Write("\n Podaj X: ");
-                    int x = Convert.ToInt32(Console.ReadKey().Key) - 48;
-                    Console.Write(" | Podaj Y: ");
-                    int y = Convert.ToInt32(Console.ReadKey().Key) - 48;
-                    Console.Write(" | Podaj wartość 1 - 9: ");
-                    int v = Convert.ToInt32(Console.ReadKey().Key) - 48;
-                    Console.Write(" | Contiuniue press Enter; Quiq press Q");
-                    s = Console.ReadKey().Key;
+                    int x = 0, y = 0, v = 0;
+                    while (!(x > 0 && x <= 9) || !(y > 0 && y <= 9) || !(v > 0 && v <= 9))
+                    {
+
+                        Console.Write("\n Podaj X: ");
+                        x = Convert.ToInt32(Console.ReadKey().Key) - 48;
+                        Console.Write(" | Podaj Y: ");
+                        y = Convert.ToInt32(Console.ReadKey().Key) - 48;
+                        Console.Write(" | Podaj wartość 1 - 9: ");
+                        v = Convert.ToInt32(Console.ReadKey().Key) - 48;
+                        if (!(x > 0 && x <= 9) || !(y > 0 && y <= 9) || !(v > 0 && v <= 9))
+                        {
+                            Console.WriteLine("Wprowadziłeś złą wartość. Spróbuj jeszcze raz");
+                        }
+                    }
+
                     sudokuBoard.SetValueToFiled(y, x, v);
+                    Console.WriteLine(sudokuBoard.ToString());
+                    Console.WriteLine();
+                    Console.Write("Contiuniue press Enter; Start SUDOKU press S");
+                    s = Console.ReadKey().Key;
+                    Console.WriteLine();
                 }
             }
             else
@@ -40,24 +55,45 @@ namespace Sudoku
                 Environment.Exit(0);
             }
         }
-        public void PrintBoard()
+        private void PrintBoard()
         {
-            Console.WriteLine(sudokuBoard.ToString());
             SudokuResolve sudokuResolve = new SudokuResolve(sudokuBoard);
-
             Console.WriteLine(sudokuResolve.Resolve().ToString());
-            Console.WriteLine("END");
+        }
+
+        public bool ResolveSudoku()
+        {
+            Console.Write("To start SUODKU press S; To QUIT press q");
+            ConsoleKey s = ConsoleKey.A;
+            s = Console.ReadKey().Key;
+            if (s == ConsoleKey.S)
+            {
+                Console.WriteLine();
+                UserValue();
+                PrintBoard();
+                return false;
+            }
+            else if (s == ConsoleKey.Q)
+            {
+                return true;
+            }
+            else
+            {
+                Console.WriteLine();
+                Console.WriteLine("Wrong KEY!");
+                return false;
+            }
         }
 
         private void Example()
         {
             //sudokuBoard.SetValueToFiled(1, 1, 4);
-            sudokuBoard.SetValueToFiled(1, 5, 7);
+            //sudokuBoard.SetValueToFiled(1, 5, 7);
             sudokuBoard.SetValueToFiled(1, 2, 2);
             sudokuBoard.SetValueToFiled(1, 4, 5);
             sudokuBoard.SetValueToFiled(1, 6, 1);
             sudokuBoard.SetValueToFiled(1, 8, 9);
-            //sudokuBoard.SetValueToFiled(2, 1, 8);
+            sudokuBoard.SetValueToFiled(2, 1, 8);
             sudokuBoard.SetValueToFiled(2, 4, 2);
             sudokuBoard.SetValueToFiled(2, 6, 3);
             sudokuBoard.SetValueToFiled(2, 9, 6);

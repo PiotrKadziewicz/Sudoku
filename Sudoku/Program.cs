@@ -10,19 +10,13 @@ namespace Sudoku
     {
         static void Main(string[] args)
         {
-            //bool gameFinished = false;
-            //while (!gameFinished)
-            //{
-            //    SudokuGame theGame = new SudokuGame();
-            //    gameFinished = theGame.resolveSudoku();
-
-            //}
-
-            SudokuGame sudokuGame = new SudokuGame();
-            //sudokuGame.PrintBoard();
-            sudokuGame.UserValue();
-            sudokuGame.PrintBoard();
-            Console.ReadLine();
+            bool gameFinished = false;
+            while (!gameFinished)
+            {
+                Console.WriteLine("Welcome to the sudoku game!");
+                SudokuGame theGame = new SudokuGame();
+                gameFinished = theGame.ResolveSudoku();
+            }
         }
     }
 

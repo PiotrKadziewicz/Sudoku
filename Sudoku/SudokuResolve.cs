@@ -70,7 +70,7 @@ namespace Sudoku
                         }
                         else
                         {
-                           //RowCheckPossibilities();
+                            //RowCheckPossibilities();
                         }
                     }
 
@@ -133,7 +133,7 @@ namespace Sudoku
                         }
                         else
                         {
-                           //ColumnCheckPossibilities();
+                            //ColumnCheckPossibilities();
                         }
                     }
                 }
@@ -198,7 +198,7 @@ namespace Sudoku
                         }
                         else
                         {
-                         //  SecionCheckPossibilities();
+                            //  SecionCheckPossibilities();
                         }
                     }
 
@@ -262,48 +262,48 @@ namespace Sudoku
             return true;
         }
 
+        private int Progress()
+        {
+            int counter = 0;
+            for (int i = 0; i < 9; i++)
+            {
+                for (int j = 0; j < 9; j++)
+                {
+                    if (Row(i)[j].Value == -1)
+                    {
+                        counter++;
+                    }
+                }
+            }
+            return counter;
+        }
+
         private void StandardResolve()
         {
             try
             {
-                int counter = 0;
-                int counterTemp = 0;
+                int start = 0;
+                int end = 0;
                 do
                 {
-                    counter = 0;
-                    counterTemp = 0;
-
-                    for (int i = 0; i < 9; i++)
-                    {
-                        for (int j = 0; j < 9; j++)
-                        {
-                            if (Row(i)[j].Value == -1)
-                            {
-                                counter++;
-                            }
-                        }
-                    }
-
+                    start = Progress();
                     RowCheck();
                     ColumnCheck();
                     SectionCheck();
-                    Console.WriteLine(board.ToString());
+                    end = Progress();
 
-                    for (int i = 0; i < 9; i++)
-                    {
-                        for (int j = 0; j < 9; j++)
-                        {
-                            if (Row(i)[j].Value == -1)
-                            {
-                                counterTemp++;
-                            }
-                        }
-                    }
-                } while (Solving(counter, counterTemp) == true);
+                } while (Solving(start, end) == true);
             }
             catch (SudokuException exp)
             {
-                BackTrack();
+                try
+                {
+                    BackTrack();
+                }
+                catch
+                {
+                    Console.WriteLine("Brak rozwiązania");
+                }
             }
         }
 
@@ -313,9 +313,9 @@ namespace Sudoku
             DateTime start = new DateTime();
             DateTime end = new DateTime();
             start = DateTime.Now;
+
             while (!Solved())
             {
-
                 StandardResolve();
                 try
                 {
@@ -346,10 +346,7 @@ namespace Sudoku
                         {
                             value = Row(r)[i].PossibleValues[0];
                             backTracks.Push(new SudokuBackTrack((SudokuBoard)board.Clone(), value, i, r));
-                            Console.WriteLine("Insert: " + value);
-
                             Row(r)[i].Value = value;
-                            Console.WriteLine(board.ToString());
                             return true;
                         }
                         else
@@ -368,9 +365,7 @@ namespace Sudoku
             {
                 SudokuBackTrack back = backTracks.Pop();
                 board = back.SudokuBoard;
-                Console.WriteLine("\nBACKTRACK | Value: " + back.Value + " | Posision: " + back.Y + " | " + back.X + "\n" + back.SudokuBoard);
                 board.columns[back.Y].sudokuRow[back.X].PossibleValues.Remove(back.Value);
-                board.columns[back.Y].sudokuRow[back.X].PossibleValues.ForEach(p => Console.Write(p + " | "));
             }
             else
             {
