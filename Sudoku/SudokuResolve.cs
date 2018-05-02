@@ -68,11 +68,44 @@ namespace Sudoku
                         {
                             Row(r)[i].Value = Row(r)[i].PossibleValues[0];
                         }
+                        else
+                        {
+                           //RowCheckPossibilities();
+                        }
                     }
 
                 }
             }
         }
+
+        private void RowCheckPossibilities()
+        {
+            HashSet<int> set = new HashSet<int>();
+            for (int r = 0; r < 9; r++)
+            {
+                for (int i = 0; i < 9; i++)
+                {
+                    if (Row(r)[i].Value == -1)
+                    {
+                        Row(r)[i].PossibleValues.ForEach(p => set.Add(p));
+                    }
+                }
+                for (int i = 0; i < 9; i++)
+                {
+                    if (Row(r)[i].Value == -1)
+                    {
+                        for (int p = 0; p < Row(r)[i].PossibleValues.Count; p++)
+                        {
+                            if (!set.Contains(Row(r)[i].PossibleValues[p]))
+                            {
+                                Row(r)[i].Value = Row(r)[i].PossibleValues[p];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         private void ColumnCheck()
         {
             for (int c = 0; c < 9; c++)
@@ -98,24 +131,38 @@ namespace Sudoku
                         {
                             Column(c)[i].Value = Column(c)[i].PossibleValues[0];
                         }
+                        else
+                        {
+                           //ColumnCheckPossibilities();
+                        }
+                    }
+                }
+            }
+        }
 
-                        ////ColumnCheckPossibilities
-                        //Column(c)[i].PossibleValues.ForEach(p => set.Add(p));
-
-                        //for (int j = 0; j < 9; j++)
-                        //{
-                        //    if (Column(c)[j].Value == -1)
-                        //    {
-                        //        for (int p = 0; p < Column(c)[j].PossibleValues.Count; p++)
-                        //        {
-                        //            if (!set.Contains(Column(c)[j].PossibleValues[p]))
-                        //            {
-                        //                Column(c)[i].Value = Column(c)[j].PossibleValues[p];
-                        //            }
-                        //        }
-
-                        //    }
-                        //}
+        private void ColumnCheckPossibilities()
+        {
+            for (int c = 0; c < 9; c++)
+            {
+                HashSet<int> set = new HashSet<int>();
+                for (int i = 0; i < 9; i++)
+                {
+                    if (Column(c)[i].Value == -1)
+                    {
+                        Column(c)[i].PossibleValues.ForEach(p => set.Add(p));
+                    }
+                }
+                for (int i = 0; i < 9; i++)
+                {
+                    if (Column(c)[i].Value == -1)
+                    {
+                        for (int p = 0; p < Column(c)[i].PossibleValues.Count; p++)
+                        {
+                            if (!set.Contains(Column(c)[i].PossibleValues[p]))
+                            {
+                                Column(c)[i].Value = Column(c)[i].PossibleValues[p];
+                            }
+                        }
                     }
                 }
             }
@@ -123,11 +170,12 @@ namespace Sudoku
 
         private void SectionCheck()
         {
+            HashSet<int> set = new HashSet<int>();
             for (int i = 0; i < 9; i += 3)
             {
                 for (int j = 0; j < 9; j += 3)
                 {
-                    HashSet<int> set = new HashSet<int>();
+
                     for (int c = 0; c < 9; c++)
                     {
                         if (Section(i, j)[c].Value == -1)
@@ -148,22 +196,44 @@ namespace Sudoku
                         {
                             Section(i, j)[c].Value = Section(i, j)[c].PossibleValues[0];
                         }
-                        //Section(i, j)[c].PossibleValues.ForEach(p => set.Add(p));
-                        //for (int g = 0; g < 9; g++)
-                        //{
-                        //    if (Section(i, j)[g].Value == -1)
-                        //    {
-                        //        for (int p = 0; p < Section(i, j)[g].PossibleValues.Count; p++)
-                        //        {
-                        //            if (!set.Contains(Section(i, j)[g].PossibleValues[p]))
-                        //            {
-                        //                Section(i, j)[c].Value = Section(i, j)[g].PossibleValues[p];
-                        //            }
-                        //        }
-                        //    }
-                        //}
+                        else
+                        {
+                         //  SecionCheckPossibilities();
+                        }
                     }
 
+                }
+            }
+        }
+
+        private void SecionCheckPossibilities()
+
+        {
+            HashSet<int> set = new HashSet<int>();
+            for (int i = 0; i < 9; i += 3)
+            {
+                for (int j = 0; j < 9; j += 3)
+                {
+                    for (int c = 0; c < 9; c++)
+                    {
+                        if (Section(i, j)[c].Value == -1)
+                        {
+                            Section(i, j)[c].PossibleValues.ForEach(p => set.Add(p));
+                        }
+                    }
+                    for (int c = 0; c < 9; c++)
+                    {
+                        if (Section(i, j)[c].Value == -1)
+                        {
+                            for (int p = 0; p < Section(i, j)[c].PossibleValues.Count; p++)
+                            {
+                                if (!set.Contains(Section(i, j)[c].PossibleValues[p]))
+                                {
+                                    Section(i, j)[c].Value = Section(i, j)[c].PossibleValues[p];
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -217,6 +287,7 @@ namespace Sudoku
                     RowCheck();
                     ColumnCheck();
                     SectionCheck();
+                    Console.WriteLine(board.ToString());
 
                     for (int i = 0; i < 9; i++)
                     {
@@ -238,6 +309,10 @@ namespace Sudoku
 
         public SudokuBoard Resolve()
         {
+            int counter = 1;
+            DateTime start = new DateTime();
+            DateTime end = new DateTime();
+            start = DateTime.Now;
             while (!Solved())
             {
 
@@ -250,7 +325,11 @@ namespace Sudoku
                 {
                     StandardResolve();
                 }
+                counter++;
             }
+            end = DateTime.Now;
+            Console.WriteLine("Ilość pętli: " + counter);
+            Console.WriteLine("Solving Time: " + (end - start));
             return board;
         }
 

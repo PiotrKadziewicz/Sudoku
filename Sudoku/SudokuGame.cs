@@ -61,13 +61,13 @@ namespace Sudoku
             sudokuBoard.SetValueToFiled(2, 4, 2);
             sudokuBoard.SetValueToFiled(2, 6, 3);
             sudokuBoard.SetValueToFiled(2, 9, 6);
-            //sudokuBoard.SetValueToFiled(3, 2, 3);
+            sudokuBoard.SetValueToFiled(3, 2, 3);
             sudokuBoard.SetValueToFiled(3, 5, 6);
             sudokuBoard.SetValueToFiled(3, 8, 7);
             sudokuBoard.SetValueToFiled(4, 3, 1);
             sudokuBoard.SetValueToFiled(4, 7, 6);
             sudokuBoard.SetValueToFiled(5, 1, 5);
-            //sudokuBoard.SetValueToFiled(5, 2, 4);
+            sudokuBoard.SetValueToFiled(5, 2, 4);
             sudokuBoard.SetValueToFiled(5, 8, 1);
             sudokuBoard.SetValueToFiled(5, 9, 9);
             sudokuBoard.SetValueToFiled(6, 3, 2);
@@ -75,7 +75,7 @@ namespace Sudoku
             sudokuBoard.SetValueToFiled(7, 2, 9);
             sudokuBoard.SetValueToFiled(7, 5, 3);
             sudokuBoard.SetValueToFiled(7, 8, 8);
-           sudokuBoard.SetValueToFiled(8, 1, 2);
+            sudokuBoard.SetValueToFiled(8, 1, 2);
             sudokuBoard.SetValueToFiled(8, 4, 8);
             sudokuBoard.SetValueToFiled(8, 6, 4);
             sudokuBoard.SetValueToFiled(8, 9, 7);
