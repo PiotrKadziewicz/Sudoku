@@ -44,6 +44,39 @@ namespace Sudoku
             return section;
         }
 
+        public int CheckInsertValue(int y, int x, int value)
+        {
+            for (int j = 0; j < 9; j++)
+            {
+                if (Row(y - 1)[j].Value == value)
+                {
+                    return -1;
+                }
+                if (Column(x - 1)[j].Value == value)
+                {
+                    return -1;
+                }
+                if (Section(SetXY(y-1), SetXY(x-1))[j].Value == value)
+                {
+                    return -1;
+                }
+            }
+            return value;
+        }
+
+        private int SetXY(int i)
+        {
+            if (i == 1 || i == 4 || i == 7)
+            {
+                return i - 1;
+            }
+            else if ((i == 2 || i == 5 || i == 8))
+            {
+                return i - 2;
+            }
+            else { return i; }
+        }
+
         private void RowCheck()
         {
             HashSet<int> set = new HashSet<int>();
@@ -266,12 +299,19 @@ namespace Sudoku
                 }
                 catch (SudokuException exp)
                 {
-                    StandardResolve();
+                    try
+                    {
+                        BackTrack();
+                    }
+                    catch
+                    {
+                        Console.WriteLine("Brak rozwiązania");
+                    }
                 }
                 counter++;
             }
             end = DateTime.Now;
-            Console.WriteLine("Ilość pętli: " + counter);
+            Console.WriteLine("Loops: " + counter);
             Console.WriteLine("Solving Time: " + (end - start));
             return board;
         }

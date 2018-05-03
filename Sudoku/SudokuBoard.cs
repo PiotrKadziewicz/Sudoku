@@ -25,7 +25,7 @@ namespace Sudoku
 
         public void SetValueToFiled(int row, int column, int value)
         {
-            columns[row - 1].sudokuRow[column - 1].Value = value;
+            columns[row - 1].sudokuRow[column - 1].Value = value; 
         }
 
         public override string ToString()

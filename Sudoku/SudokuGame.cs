@@ -31,18 +31,18 @@ namespace Sudoku
                     {
 
                         Console.Write("\n Podaj X: ");
-                        x = Convert.ToInt32(Console.ReadKey().Key) - 48;
+                        x = Convert.ToInt32(Console.ReadKey().KeyChar) - 48;
                         Console.Write(" | Podaj Y: ");
-                        y = Convert.ToInt32(Console.ReadKey().Key) - 48;
+                        y = Convert.ToInt32(Console.ReadKey().KeyChar) - 48;
                         Console.Write(" | Podaj wartość 1 - 9: ");
-                        v = Convert.ToInt32(Console.ReadKey().Key) - 48;
+                        v = Convert.ToInt32(Console.ReadKey().KeyChar) - 48;
                         if (!(x > 0 && x <= 9) || !(y > 0 && y <= 9) || !(v > 0 && v <= 9))
                         {
                             Console.WriteLine("Wprowadziłeś złą wartość. Spróbuj jeszcze raz");
                         }
                     }
-
-                    sudokuBoard.SetValueToFiled(y, x, v);
+                    SudokuResolve valueCheck = new SudokuResolve(sudokuBoard);
+                    sudokuBoard.SetValueToFiled(y, x, valueCheck.CheckInsertValue(y,x,v));
                     Console.WriteLine(sudokuBoard.ToString());
                     Console.WriteLine();
                     Console.Write("Contiuniue press Enter; Start SUDOKU press S");
@@ -87,8 +87,6 @@ namespace Sudoku
 
         private void Example()
         {
-            //sudokuBoard.SetValueToFiled(1, 1, 4);
-            //sudokuBoard.SetValueToFiled(1, 5, 7);
             sudokuBoard.SetValueToFiled(1, 2, 2);
             sudokuBoard.SetValueToFiled(1, 4, 5);
             sudokuBoard.SetValueToFiled(1, 6, 1);
