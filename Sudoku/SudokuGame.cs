@@ -14,7 +14,7 @@ namespace Sudoku
         {
 
             ConsoleKey s = ConsoleKey.A;
-            Console.Write("Example data press E; Own Data press O; Press eny key to quiq: ");
+            Console.Write("Example data press E; Own Data press O; Press eny key to quit: ");
             ConsoleKey k = Console.ReadKey().Key;
             if (k == ConsoleKey.E)
             {
@@ -42,10 +42,10 @@ namespace Sudoku
                         }
                     }
                     SudokuResolve valueCheck = new SudokuResolve(sudokuBoard);
-                    sudokuBoard.SetValueToFiled(y, x, valueCheck.CheckInsertValue(y,x,v));
+                    sudokuBoard.SetValueToField(y, x, valueCheck.CheckInsertValue(y,x,v));
                     Console.WriteLine(sudokuBoard.ToString());
                     Console.WriteLine();
-                    Console.Write("Contiuniue press Enter; Start SUDOKU press S");
+                    Console.Write("Contiuniue press Enter; Start SOLVING SUDOKU press S");
                     s = Console.ReadKey().Key;
                     Console.WriteLine();
                 }
@@ -87,36 +87,36 @@ namespace Sudoku
 
         private void Example()
         {
-            sudokuBoard.SetValueToFiled(1, 2, 2);
-            sudokuBoard.SetValueToFiled(1, 4, 5);
-            sudokuBoard.SetValueToFiled(1, 6, 1);
-            sudokuBoard.SetValueToFiled(1, 8, 9);
-            sudokuBoard.SetValueToFiled(2, 1, 8);
-            sudokuBoard.SetValueToFiled(2, 4, 2);
-            sudokuBoard.SetValueToFiled(2, 6, 3);
-            sudokuBoard.SetValueToFiled(2, 9, 6);
-            sudokuBoard.SetValueToFiled(3, 2, 3);
-            sudokuBoard.SetValueToFiled(3, 5, 6);
-            sudokuBoard.SetValueToFiled(3, 8, 7);
-            sudokuBoard.SetValueToFiled(4, 3, 1);
-            sudokuBoard.SetValueToFiled(4, 7, 6);
-            sudokuBoard.SetValueToFiled(5, 1, 5);
-            sudokuBoard.SetValueToFiled(5, 2, 4);
-            sudokuBoard.SetValueToFiled(5, 8, 1);
-            sudokuBoard.SetValueToFiled(5, 9, 9);
-            sudokuBoard.SetValueToFiled(6, 3, 2);
-            sudokuBoard.SetValueToFiled(6, 7, 7);
-            sudokuBoard.SetValueToFiled(7, 2, 9);
-            sudokuBoard.SetValueToFiled(7, 5, 3);
-            sudokuBoard.SetValueToFiled(7, 8, 8);
-            sudokuBoard.SetValueToFiled(8, 1, 2);
-            sudokuBoard.SetValueToFiled(8, 4, 8);
-            sudokuBoard.SetValueToFiled(8, 6, 4);
-            sudokuBoard.SetValueToFiled(8, 9, 7);
-            sudokuBoard.SetValueToFiled(9, 2, 1);
-            sudokuBoard.SetValueToFiled(9, 4, 9);
-            sudokuBoard.SetValueToFiled(9, 6, 7);
-            sudokuBoard.SetValueToFiled(9, 8, 6);
+            sudokuBoard.SetValueToField(1, 2, 2);
+            sudokuBoard.SetValueToField(1, 4, 5);
+            sudokuBoard.SetValueToField(1, 6, 1);
+            sudokuBoard.SetValueToField(1, 8, 9);
+            sudokuBoard.SetValueToField(2, 1, 8);
+            sudokuBoard.SetValueToField(2, 4, 2);
+            sudokuBoard.SetValueToField(2, 6, 3);
+            sudokuBoard.SetValueToField(2, 9, 6);
+            sudokuBoard.SetValueToField(3, 2, 3);
+            sudokuBoard.SetValueToField(3, 5, 6);
+            sudokuBoard.SetValueToField(3, 8, 7);
+            sudokuBoard.SetValueToField(4, 3, 1);
+            sudokuBoard.SetValueToField(4, 7, 6);
+            sudokuBoard.SetValueToField(5, 1, 5);
+            sudokuBoard.SetValueToField(5, 2, 4);
+            sudokuBoard.SetValueToField(5, 8, 1);
+            sudokuBoard.SetValueToField(5, 9, 9);
+            sudokuBoard.SetValueToField(6, 3, 2);
+            sudokuBoard.SetValueToField(6, 7, 7);
+            sudokuBoard.SetValueToField(7, 2, 9);
+            sudokuBoard.SetValueToField(7, 5, 3);
+            sudokuBoard.SetValueToField(7, 8, 8);
+            sudokuBoard.SetValueToField(8, 1, 2);
+            sudokuBoard.SetValueToField(8, 4, 8);
+            sudokuBoard.SetValueToField(8, 6, 4);
+            sudokuBoard.SetValueToField(8, 9, 7);
+            sudokuBoard.SetValueToField(9, 2, 1);
+            sudokuBoard.SetValueToField(9, 4, 9);
+            sudokuBoard.SetValueToField(9, 6, 7);
+            sudokuBoard.SetValueToField(9, 8, 6);
         }
     }
 }

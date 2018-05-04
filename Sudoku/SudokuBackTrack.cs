@@ -15,7 +15,7 @@ namespace Sudoku
 
         public SudokuBackTrack(SudokuBoard sudokuBoard, int value, int x, int y)
         {
-            SudokuBoard = sudokuBoard;
+            this.SudokuBoard = sudokuBoard;
             Value = value;
             X = x;
             Y = y;

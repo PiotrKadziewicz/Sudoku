@@ -12,20 +12,20 @@ namespace Sudoku
         public readonly static int MAX_INDEX = 9;
         public static int EMPTY = -1;
 
-        public List<SudokuRow> columns { get; set; }
+        public List<SudokuRow> Rows { get; set; }
 
         public SudokuBoard()
         {
-            columns = new List<SudokuRow>();
+            this.Rows = new List<SudokuRow>();
             for (int i = MIN_INDEX; i < MAX_INDEX; i++)
             {
-                columns.Add(new SudokuRow());
+                Rows.Add(new SudokuRow());
             }
         }
 
-        public void SetValueToFiled(int row, int column, int value)
+        public void SetValueToField(int row, int column, int value)
         {
-            columns[row - 1].sudokuRow[column - 1].Value = value; 
+            Rows[row - 1].SudokuRows[column - 1].Value = value; 
         }
 
         public override string ToString()
@@ -40,13 +40,13 @@ namespace Sudoku
 
                 for (int j = 0; j < MAX_INDEX; j++)
                 {
-                    if (columns[i].sudokuRow[j].Value == EMPTY)
+                    if (Rows[i].SudokuRows[j].Value == EMPTY)
                     {
                         board += "  | ";
                     }
                     else
                     {
-                        board += columns[i].sudokuRow[j].Value + " | ";
+                        board += Rows[i].SudokuRows[j].Value + " | ";
                     }
 
                 }
@@ -59,21 +59,21 @@ namespace Sudoku
         public object Clone()
         {
             SudokuBoard clonedBoard = new SudokuBoard();
-            clonedBoard.columns = new List<SudokuRow>();
+            clonedBoard.Rows = new List<SudokuRow>();
 
-            foreach (SudokuRow row in columns)
+            foreach (SudokuRow row in Rows)
             {
                 SudokuRow clonedRow = new SudokuRow();
-                clonedRow.sudokuRow.Clear();
-                foreach (SudokuElement element in row.sudokuRow)
+                clonedRow.SudokuRows.Clear();
+                foreach (SudokuElement element in row.SudokuRows)
                 {
                     SudokuElement clonedElemnt = new SudokuElement();
                     clonedElemnt.Value = element.Value;
                     clonedElemnt.PossibleValues.Clear();
                     element.PossibleValues.ForEach(e => clonedElemnt.PossibleValues.Add(e));
-                    clonedRow.sudokuRow.Add(clonedElemnt);
+                    clonedRow.SudokuRows.Add(clonedElemnt);
                 }
-                clonedBoard.columns.Add(clonedRow);
+                clonedBoard.Rows.Add(clonedRow);
             }
             return clonedBoard;
         }

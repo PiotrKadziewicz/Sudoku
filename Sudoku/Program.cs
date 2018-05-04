@@ -13,7 +13,7 @@ namespace Sudoku
             bool gameFinished = false;
             while (!gameFinished)
             {
-                Console.WriteLine("Welcome to the sudoku game!");
+                Console.WriteLine("Welcome to the SUDOKU RESOLVE!");
                 SudokuGame theGame = new SudokuGame();
                 gameFinished = theGame.ResolveSudoku();
             }

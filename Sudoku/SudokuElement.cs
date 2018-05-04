@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Sudoku.Const;
 
 namespace Sudoku
 {
     class SudokuElement
     {
-        public static int EMPTY = -1;
         public int Value { get; set; }
         public List<int> PossibleValues { get; set; }
         public SudokuElement()

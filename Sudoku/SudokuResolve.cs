@@ -3,30 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Sudoku.Const;
 
 namespace Sudoku
 {
     class SudokuResolve
     {
-        private SudokuBoard board;
+        private SudokuBoard sudokuBoard;
         Stack<SudokuBackTrack> backTracks = new Stack<SudokuBackTrack>();
 
         public SudokuResolve(SudokuBoard board)
         {
-            this.board = board;
+            this.sudokuBoard = board;
         }
 
         private List<SudokuElement> Row(int rowNo)
         {
-            return board.columns[rowNo].sudokuRow;
+            return sudokuBoard.Rows[rowNo].SudokuRows;
         }
 
         private List<SudokuElement> Column(int colNo)
         {
             List<SudokuElement> elements = new List<SudokuElement>();
-            for (int i = 0; i < 9; i++)
+            for (int i = MIN_INDEX; i < MAX_INDEX; i++)
             {
-                elements.Add(board.columns[i].sudokuRow[colNo]);
+                elements.Add(sudokuBoard.Rows[i].SudokuRows[colNo]);
             }
             return elements;
         }
@@ -38,7 +39,7 @@ namespace Sudoku
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    section.Add(board.columns[i + secColNo].sudokuRow[j + secRowNo]);
+                    section.Add(sudokuBoard.Rows[i + secColNo].SudokuRows[j + secRowNo]);
                 }
             }
             return section;
@@ -50,15 +51,15 @@ namespace Sudoku
             {
                 if (Row(y - 1)[j].Value == value)
                 {
-                    return -1;
+                    return EMPTY;
                 }
                 if (Column(x - 1)[j].Value == value)
                 {
-                    return -1;
+                    return EMPTY;
                 }
-                if (Section(SetXY(y-1), SetXY(x-1))[j].Value == value)
+                if (Section(SetXY(y - 1), SetXY(x - 1))[j].Value == value)
                 {
-                    return -1;
+                    return EMPTY;
                 }
             }
             return value;
@@ -79,15 +80,16 @@ namespace Sudoku
 
         private void RowCheck()
         {
+
             HashSet<int> set = new HashSet<int>();
 
-            for (int r = 0; r < 9; r++)
+            for (int r = MIN_INDEX; r < MAX_INDEX; r++)
             {
-                for (int i = 0; i < Row(r).Count; i++)
+                for (int i = MIN_INDEX; i < Row(r).Count; i++)
                 {
-                    if (Row(r)[i].Value == -1)
+                    if (Row(r)[i].Value == EMPTY)
                     {
-                        for (int j = 0; j < 9; j++)
+                        for (int j = MIN_INDEX; j < MAX_INDEX; j++)
                         {
                             if (Row(r)[i].PossibleValues.Contains(Row(r)[j].Value))
                             {
@@ -97,7 +99,7 @@ namespace Sudoku
                             {
                                 throw new SudokuException();
                             }
-                            if (Row(r)[j].Value == -1)
+                            if (Row(r)[j].Value == EMPTY)
                             {
                                 Row(r)[j].PossibleValues.ForEach(p => set.Add(p));
                             }
@@ -126,13 +128,13 @@ namespace Sudoku
         {
             HashSet<int> set = new HashSet<int>();
 
-            for (int c = 0; c < 9; c++)
+            for (int c = MIN_INDEX; c < MAX_INDEX; c++)
             {
-                for (int i = 0; i < Column(c).Count; i++)
+                for (int i = MIN_INDEX; i < Column(c).Count; i++)
                 {
-                    if (Column(c)[i].Value == -1)
+                    if (Column(c)[i].Value == EMPTY)
                     {
-                        for (int j = 0; j < 9; j++)
+                        for (int j = MIN_INDEX; j < MAX_INDEX; j++)
                         {
 
                             if (Column(c)[i].PossibleValues.Contains(Column(c)[j].Value))
@@ -143,7 +145,7 @@ namespace Sudoku
                             {
                                 throw new SudokuException();
                             }
-                            if (Column(c)[j].Value == -1)
+                            if (Column(c)[j].Value == EMPTY)
                             {
                                 Column(c)[j].PossibleValues.ForEach(p => set.Add(p));
                             }
@@ -170,14 +172,14 @@ namespace Sudoku
         private void SectionCheck()
         {
             HashSet<int> set = new HashSet<int>();
-            for (int i = 0; i < 9; i += 3)
+            for (int i = MIN_INDEX; i < MAX_INDEX; i += 3)
             {
-                for (int j = 0; j < 9; j += 3)
+                for (int j = MIN_INDEX; j < MAX_INDEX; j += 3)
                 {
 
-                    for (int c = 0; c < 9; c++)
+                    for (int c = MIN_INDEX; c < 9; c++)
                     {
-                        if (Section(i, j)[c].Value == -1)
+                        if (Section(i, j)[c].Value == EMPTY)
                         {
                             for (int e = 0; e < 9; e++)
                             {
@@ -190,7 +192,7 @@ namespace Sudoku
                                 {
                                     Section(i, j)[c].PossibleValues.Remove(Section(i, j)[e].Value);
                                 }
-                                if (Section(i, j)[e].Value == -1)
+                                if (Section(i, j)[e].Value == EMPTY)
                                 {
                                     Section(i, j)[e].PossibleValues.ForEach(p => set.Add(p));
                                 }
@@ -217,11 +219,11 @@ namespace Sudoku
 
         private bool Solved()
         {
-            for (int i = 0; i < 9; i++)
+            for (int i = MIN_INDEX; i < MAX_INDEX; i++)
             {
-                for (int j = 0; j < 9; j++)
+                for (int j = MIN_INDEX; j < MAX_INDEX; j++)
                 {
-                    if (Row(i)[j].Value == -1)
+                    if (Row(i)[j].Value == EMPTY)
                     {
                         return false;
                     }
@@ -242,11 +244,11 @@ namespace Sudoku
         private int Progress()
         {
             int counter = 0;
-            for (int i = 0; i < 9; i++)
+            for (int i = MIN_INDEX; i < MAX_INDEX; i++)
             {
-                for (int j = 0; j < 9; j++)
+                for (int j = MIN_INDEX; j < MAX_INDEX; j++)
                 {
-                    if (Row(i)[j].Value == -1)
+                    if (Row(i)[j].Value == EMPTY)
                     {
                         counter++;
                     }
@@ -313,22 +315,22 @@ namespace Sudoku
             end = DateTime.Now;
             Console.WriteLine("Loops: " + counter);
             Console.WriteLine("Solving Time: " + (end - start));
-            return board;
+            return sudokuBoard;
         }
 
         private bool Guess()
         {
             int value = 0;
-            for (int r = 0; r < 9; r++)
+            for (int r = MIN_INDEX; r < MAX_INDEX; r++)
             {
-                for (int i = 0; i < 9; i++)
+                for (int i = MIN_INDEX; i < MAX_INDEX; i++)
                 {
-                    if (Row(r)[i].Value == -1)
+                    if (Row(r)[i].Value == EMPTY)
                     {
                         if (Row(r)[i].PossibleValues.Count >= 1)
                         {
                             value = Row(r)[i].PossibleValues[0];
-                            backTracks.Push(new SudokuBackTrack((SudokuBoard)board.Clone(), value, i, r));
+                            backTracks.Push(new SudokuBackTrack((SudokuBoard)sudokuBoard.Clone(), value, i, r));
                             Row(r)[i].Value = value;
                             return true;
                         }
@@ -347,8 +349,8 @@ namespace Sudoku
             if (backTracks.Count != 0)
             {
                 SudokuBackTrack back = backTracks.Pop();
-                board = back.SudokuBoard;
-                board.columns[back.Y].sudokuRow[back.X].PossibleValues.Remove(back.Value);
+                sudokuBoard = back.SudokuBoard;
+                sudokuBoard.Rows[back.Y].SudokuRows[back.X].PossibleValues.Remove(back.Value);
             }
             else
             {

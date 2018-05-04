@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Const.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="SudokuBackTrack.cs" />
     <Compile Include="SudokuBoard.cs" />
