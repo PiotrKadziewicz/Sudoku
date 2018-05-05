@@ -8,7 +8,8 @@ namespace Sudoku
 {
     class SudokuGame
     {
-        SudokuBoard sudokuBoard = new SudokuBoard();
+        private static SudokuBoard sudokuBoard = new SudokuBoard();
+        private SudokuResolve sudokuResolve = new SudokuResolve(sudokuBoard);
 
         public void UserValue()
         {
@@ -41,8 +42,8 @@ namespace Sudoku
                             Console.WriteLine("Wprowadziłeś złą wartość. Spróbuj jeszcze raz");
                         }
                     }
-                    SudokuResolve valueCheck = new SudokuResolve(sudokuBoard);
-                    sudokuBoard.SetValueToField(y, x, valueCheck.CheckInsertValue(y,x,v));
+                    
+                    sudokuBoard.SetValueToField(y, x, sudokuResolve.CheckInsertValue(y,x,v));
                     Console.WriteLine(sudokuBoard.ToString());
                     Console.WriteLine();
                     Console.Write("Contiuniue press Enter; Start SOLVING SUDOKU press S");
@@ -55,11 +56,6 @@ namespace Sudoku
                 Environment.Exit(0);
             }
         }
-        private void PrintBoard()
-        {
-            SudokuResolve sudokuResolve = new SudokuResolve(sudokuBoard);
-            Console.WriteLine(sudokuResolve.Resolve().ToString());
-        }
 
         public bool ResolveSudoku()
         {
@@ -70,7 +66,7 @@ namespace Sudoku
             {
                 Console.WriteLine();
                 UserValue();
-                PrintBoard();
+                Console.WriteLine(sudokuResolve.Resolve().ToString());
                 return false;
             }
             else if (s == ConsoleKey.Q)
