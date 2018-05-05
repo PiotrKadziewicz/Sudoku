@@ -8,12 +8,11 @@ namespace Sudoku
 {
     class SudokuGame
     {
-        private static SudokuBoard sudokuBoard = new SudokuBoard();
-        private SudokuResolve sudokuResolve = new SudokuResolve(sudokuBoard);
+        private SudokuBoard sudokuBoard = new SudokuBoard();
 
         public void UserValue()
         {
-
+            SudokuResolve sudokuResolve = new SudokuResolve(sudokuBoard);
             ConsoleKey s = ConsoleKey.A;
             Console.Write("Example data press E; Own Data press O; Press eny key to quit: ");
             ConsoleKey k = Console.ReadKey().Key;
@@ -44,7 +43,6 @@ namespace Sudoku
                     }
                     
                     sudokuBoard.SetValueToField(y, x, sudokuResolve.CheckInsertValue(y,x,v));
-                    Console.WriteLine(sudokuBoard.ToString());
                     Console.WriteLine();
                     Console.Write("Contiuniue press Enter; Start SOLVING SUDOKU press S");
                     s = Console.ReadKey().Key;
@@ -59,6 +57,7 @@ namespace Sudoku
 
         public bool ResolveSudoku()
         {
+            SudokuResolve sudokuResolve = new SudokuResolve(sudokuBoard);
             Console.Write("To start SUODKU press S; To QUIT press q");
             ConsoleKey s = ConsoleKey.A;
             s = Console.ReadKey().Key;
@@ -66,6 +65,9 @@ namespace Sudoku
             {
                 Console.WriteLine();
                 UserValue();
+                Console.WriteLine(sudokuBoard.ToString());
+                Console.WriteLine("Press any key to continiue...");
+                Console.ReadKey();
                 Console.WriteLine(sudokuResolve.Resolve().ToString());
                 return false;
             }

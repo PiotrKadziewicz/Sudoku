@@ -234,11 +234,7 @@ namespace Sudoku
 
         private bool Solving(int counter, int counterTemp)
         {
-            if (counter == counterTemp)
-            {
-                return false;
-            }
-            return true;
+            return !(counter == counterTemp);
         }
 
         private int Progress()
