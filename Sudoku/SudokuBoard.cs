@@ -3,15 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Sudoku.Const;
 
 namespace Sudoku
 {
     class SudokuBoard : ICloneable
     {
-        public readonly static int MIN_INDEX = 0;
-        public readonly static int MAX_INDEX = 9;
-        public static int EMPTY = -1;
-
         public List<SudokuRow> Rows { get; set; }
 
         public SudokuBoard()

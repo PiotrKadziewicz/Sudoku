@@ -99,11 +99,10 @@ namespace Sudoku
                             {
                                 throw new SudokuException();
                             }
-                            if (Row(r)[j].Value == EMPTY)
-                            {
-                                Row(r)[j].PossibleValues.ForEach(p => set.Add(p));
-                            }
                         }
+
+                        Row(r).Where(v => v.Value == EMPTY).ToList().ForEach(x => x.PossibleValues.ForEach(p => set.Add(p)));
+
                         if (Row(r)[i].PossibleValues.Count == 1)
                         {
                             Row(r)[i].Value = Row(r)[i].PossibleValues[0];
@@ -119,7 +118,6 @@ namespace Sudoku
                             }
                         }
                     }
-
                 }
             }
         }
@@ -145,11 +143,10 @@ namespace Sudoku
                             {
                                 throw new SudokuException();
                             }
-                            if (Column(c)[j].Value == EMPTY)
-                            {
-                                Column(c)[j].PossibleValues.ForEach(p => set.Add(p));
-                            }
                         }
+
+                        Column(c).Where(v => v.Value == EMPTY).ToList().ForEach(x => x.PossibleValues.ForEach(p => set.Add(p)));
+
                         if (Column(c)[i].PossibleValues.Count == 1)
                         {
                             Column(c)[i].Value = Column(c)[i].PossibleValues[0];
@@ -176,14 +173,12 @@ namespace Sudoku
             {
                 for (int j = MIN_INDEX; j < MAX_INDEX; j += 3)
                 {
-
                     for (int c = MIN_INDEX; c < 9; c++)
                     {
                         if (Section(i, j)[c].Value == EMPTY)
                         {
                             for (int e = 0; e < 9; e++)
                             {
-
                                 if ((Section(i, j)[c].PossibleValues.Count == 1 && Section(i, j)[c].PossibleValues.Contains(Section(i, j)[e].Value)) || Section(i, j)[c].PossibleValues.Count == 0)
                                 {
                                     throw new SudokuException();
@@ -191,12 +186,11 @@ namespace Sudoku
                                 else if (Section(i, j)[c].PossibleValues.Contains(Section(i, j)[e].Value))
                                 {
                                     Section(i, j)[c].PossibleValues.Remove(Section(i, j)[e].Value);
-                                }
-                                if (Section(i, j)[e].Value == EMPTY)
-                                {
-                                    Section(i, j)[e].PossibleValues.ForEach(p => set.Add(p));
-                                }
+                                } 
                             }
+
+                            Section(i, j).Where(v => v.Value == EMPTY).ToList().ForEach(x => x.PossibleValues.ForEach(p => set.Add(p)));
+
                             if (Section(i, j)[c].PossibleValues.Count == 1)
                             {
                                 Section(i, j)[c].Value = Section(i, j)[c].PossibleValues[0];
@@ -239,18 +233,7 @@ namespace Sudoku
 
         private int Progress()
         {
-            int counter = 0;
-            for (int i = MIN_INDEX; i < MAX_INDEX; i++)
-            {
-                for (int j = MIN_INDEX; j < MAX_INDEX; j++)
-                {
-                    if (Row(i)[j].Value == EMPTY)
-                    {
-                        counter++;
-                    }
-                }
-            }
-            return counter;
+            return sudokuBoard.Rows.Sum(s => s.SudokuRows.Count(r => r.Value == EMPTY));
         }
 
         private void StandardResolve()

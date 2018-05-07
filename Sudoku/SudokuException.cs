@@ -11,9 +11,5 @@ namespace Sudoku
         public SudokuException()
         {
         }
-
-        public SudokuException(string message) : base("Get back" + message)
-        {
-        }
     }
 }
