@@ -103,6 +103,7 @@ namespace Sudoku
 
                         Row(r).Where(v => v.Value == EMPTY).ToList().ForEach(x => x.PossibleValues.ForEach(p => set.Add(p)));
 
+
                         if (Row(r)[i].PossibleValues.Count == 1)
                         {
                             Row(r)[i].Value = Row(r)[i].PossibleValues[0];
