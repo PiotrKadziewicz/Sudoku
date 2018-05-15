@@ -55,7 +55,7 @@ namespace Sudoku
 
         public object Clone()
         {
-            SudokuBoard clonedBoard = new SudokuBoard();
+            SudokuBoard clonedBoard = this.MemberwiseClone() as SudokuBoard;
             clonedBoard.Rows = new List<SudokuRow>();
 
             foreach (SudokuRow row in Rows)
