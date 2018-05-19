@@ -85,7 +85,7 @@ namespace Sudoku
 
         private void Example()
         {
-            //sudokuBoard.SetValueToField(1, 1, 4);
+            sudokuBoard.SetValueToField(1, 1, 4);
             sudokuBoard.SetValueToField(1, 2, 2);
             sudokuBoard.SetValueToField(1, 4, 5);
             sudokuBoard.SetValueToField(1, 6, 1);
@@ -116,7 +116,7 @@ namespace Sudoku
             sudokuBoard.SetValueToField(9, 4, 9);
             sudokuBoard.SetValueToField(9, 6, 7);
             sudokuBoard.SetValueToField(9, 8, 6);
-            //sudokuBoard.SetValueToField(9, 9, 1);
+            sudokuBoard.SetValueToField(9, 9, 1);
         }
     }
 }

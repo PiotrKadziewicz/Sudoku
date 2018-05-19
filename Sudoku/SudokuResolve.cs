@@ -81,12 +81,10 @@ namespace Sudoku
 
         private void RowCheck()
         {
-
             HashSet<int> set = new HashSet<int>();
-            List<SudokuElement> row;
             for (int r = 0; r < 9; r++)
             {
-                row = Row(r);
+                List<SudokuElement> row = Row(r);
                 for (int i = 0; i < row.Count; i++)
                 {
                     if (row[i].Value == -1)
@@ -102,10 +100,6 @@ namespace Sudoku
                             {
                                 throw new SudokuException();
                             }
-                            //if (Row(r)[j].Value == -1)
-                            //{
-                            //    row[j].PossibleValues.ForEach(p => set.Add(p));
-                            //}
                         }
 
                         Row(r).Where(v => v.Value == EMPTY).ToList().ForEach(x => x.PossibleValues.ForEach(p => set.Add(p)));
@@ -132,10 +126,9 @@ namespace Sudoku
         private void ColumnCheck()
         {
             HashSet<int> set = new HashSet<int>();
-            List<SudokuElement> col;
             for (int c = 0; c < 9; c++)
             {
-                col = Column(c);
+                List<SudokuElement> col = Column(c);
                 for (int i = 0; i < col.Count; i++)
                 {
                     if (col[i].Value == -1)
@@ -151,10 +144,6 @@ namespace Sudoku
                             {
                                 throw new SudokuException();
                             }
-                            //if (Column(c)[j].Value == -1)
-                            //{
-                            //    col[j].PossibleValues.ForEach(p => set.Add(p));
-                            //}
                         }
 
                         col.Where(v => v.Value == EMPTY).ToList().ForEach(x => x.PossibleValues.ForEach(p => set.Add(p)));
@@ -181,12 +170,11 @@ namespace Sudoku
         private void SectionCheck()
         {
             HashSet<int> set = new HashSet<int>();
-            List<SudokuElement> section;
             for (int i = 0; i < 9; i += 3)
             {
                 for (int j = 0; j < 9; j += 3)
                 {
-                    section = Section(i, j);
+                    List<SudokuElement> section = Section(i, j);
                     for (int c = 0; c < 9; c++)
                     {
                         if (section[c].Value == -1)
@@ -201,10 +189,6 @@ namespace Sudoku
                                 {
                                     section[c].PossibleValues.Remove(section[e].Value);
                                 }
-                                //if (Section(i, j)[e].Value == -1)
-                                //{
-                                //    section[e].PossibleValues.ForEach(p => set.Add(p));
-                                //}
                             }
 
                             section.Where(v => v.Value == EMPTY).ToList().ForEach(x => x.PossibleValues.ForEach(p => set.Add(p)));
@@ -252,20 +236,6 @@ namespace Sudoku
         private int Progress()
         {
             return sudokuBoard.Rows.Sum(s => s.SudokuRows.Count(r => r.Value == EMPTY));
-
-            //int counter = 0;
-            //for (int i = 0; i < 9; i++)
-            //{
-            //    for (int j = 0; j < 9; j++)
-            //    {
-            //        if (Row(i)[j].Value == -1)
-            //        {
-            //            counter++;
-            //        }
-            //    }
-            //}
-
-            //return counter;
         }
 
         private void StandardResolve()
@@ -299,30 +269,23 @@ namespace Sudoku
         public SudokuBoard Resolve()
         {
             int counter = 1;
-            //var stopwatch = new Stopwatch();
-            //var stopwatch2 = new Stopwatch();
-            //var stopwatch3 = new Stopwatch();
-            var stopwatch4 = new Stopwatch();
-            stopwatch4.Start();
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
 
             while (!Solved())
             {
-                //stopwatch3.Start();
+
                 StandardResolve();
-                //stopwatch3.Stop();
+
                 try
                 {
-                    //stopwatch.Start();
                     Guess();
-                    //stopwatch.Stop();
                 }
                 catch
                 {
                     try
                     {
-                        //stopwatch2.Start();
                         BackTrack();
-                        //stopwatch2.Stop();
                     }
                     catch
                     {
@@ -331,14 +294,10 @@ namespace Sudoku
                 }
                 counter++;
             }
-            stopwatch4.Stop();
-            //double time = stopwatch.Elapsed.TotalMilliseconds * 1000000;
-            //double time2 = stopwatch2.Elapsed.TotalMilliseconds * 1000000;
-            //double time3 = stopwatch3.Elapsed.TotalMilliseconds * 1000000;
-            double time4 = stopwatch4.Elapsed.TotalMilliseconds * 1000000;
+            stopwatch.Stop();
+            double time4 = stopwatch.Elapsed.TotalMilliseconds;
             Console.WriteLine("Loops: " + counter);
-            //Console.WriteLine($"standard time: {time3} ({time3 / 1000000}) | guess Time: {time} ({time / 1000000}) | backtrack time: {time2} ({time2 / 1000000})");
-            Console.WriteLine($"Total: {time4} ({time4 / 1000000})");
+            Console.WriteLine($"Resolve Time: {time4} ms");
             return sudokuBoard;
         }
 
@@ -346,10 +305,9 @@ namespace Sudoku
         {
             Random radnom = new Random();
             int value = 0;
-            List<SudokuElement> row;
             for (int r = 0; r < 9; r++)
             {
-                row = Row(r);
+                List<SudokuElement> row = Row(r);
                 for (int i = 0; i < 9; i++)
                 {
                     if (row[i].Value == -1)
