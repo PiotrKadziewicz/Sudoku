@@ -269,10 +269,10 @@ namespace Sudoku
         public SudokuBoard Resolve()
         {
             int counter = 1;
+            bool error = true;
             var stopwatch = new Stopwatch();
             stopwatch.Start();
-
-            while (!Solved())
+            while (!Solved() && error)
             {
 
                 StandardResolve();
@@ -290,6 +290,7 @@ namespace Sudoku
                     catch
                     {
                         Console.WriteLine("Brak rozwiązania");
+                        error = false;
                     }
                 }
                 counter++;
