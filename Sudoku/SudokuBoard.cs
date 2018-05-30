@@ -64,8 +64,10 @@ namespace Sudoku
                 clonedRow.SudokuRows.Clear();
                 foreach (SudokuElement element in row.SudokuRows)
                 {
-                    SudokuElement clonedElemnt = new SudokuElement();
-                    clonedElemnt.Value = element.Value;
+                    SudokuElement clonedElemnt = new SudokuElement
+                    {
+                        Value = element.Value
+                    };
                     clonedElemnt.PossibleValues.Clear();
                     element.PossibleValues.ForEach(e => clonedElemnt.PossibleValues.Add(e));
                     clonedRow.SudokuRows.Add(clonedElemnt);
